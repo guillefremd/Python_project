@@ -182,7 +182,27 @@ def print_map(road_map):
     their connections, along with the cost for each connection 
     and the total cost.
     """
-    pass
+    try:
+        if len(road_map)<3:
+            print ("There are less than three cities in the road map, please load a new file")
+            return False
+        else:
+            total_distance=0
+            for i in range (0,len(road_map)):
+                a= float(road_map[i][2]) 
+                b=float(road_map[((i+1)%len(road_map))][2])
+                c=float(road_map[i][3])
+                d=float(road_map[((i+1)%len(road_map))][3])
+                nextdistance=math.sqrt(((a-b)**2)+((c-d)**2))
+
+                print ("From " + road_map[i][1] + " to " + (road_map[((i+1)%len(road_map))][1]) +": "+ str(nextdistance))
+                total_distance+=nextdistance
+            print("----------End of the road map----------")
+            print("The total distance of the current road map is " + str(total_distance))
+
+    except ValueError:
+        print("Please make sure your cities data file is correct.\n Please usa a new map")
+        return False
 
 def main():
     """
