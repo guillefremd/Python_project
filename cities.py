@@ -1,5 +1,6 @@
 import copy
 import math
+import tkinter
 from random import randint
 
 
@@ -203,6 +204,50 @@ def print_map(road_map):
     except ValueError:
         print("Please make sure your cities data file is correct.\n Please usa a new map")
         return False
+    
+def visualise(road_map):
+
+    mapa=tkinter.Tk()
+    mapa.title("Road Map")
+    canvas=tkinter.Canvas(mapa,width=1600,height=800)
+    total_distance=0
+    min_lat=100
+    max_lat=-100
+    min_lon=-200
+    max_lon=200
+
+    for i in range (0,len(road_map)):
+        a= float(road_map[i][2])
+        b=float(road_map[i][3])
+
+        if a<min_lat:min_lat=a
+        if a>max_lat:max_lat=a
+        if b>max_lon:max_lon=b
+        if b<min_lon:min_lon=b
+
+
+
+
+
+    
+    
+    #for i in range (0,len(road_map)):
+    for i in range (0,50):
+        a= float(road_map[i][2]) 
+        b=float(road_map[((i+1)%len(road_map))][2])
+        c=float(road_map[i][3])
+        d=float(road_map[((i+1)%len(road_map))][3])
+        nextdistance=math.sqrt(((a-b)**2)+((c-d)**2))
+        
+        canvas.create_text((c+260)*6,(a)*6,text=str(i))
+        canvas.pack()
+        
+    canvas.create_text(10,200,text="10,200")
+    canvas.create_text(200,10,text="200,10")
+    canvas.pack()
+
+    
+
 
 def main():
     """
@@ -215,6 +260,7 @@ def main():
     find_best_cycle(road_map)
     print("This is the best cycle we identifed:")
     print_cities(road_map)
+    visualise(road_map)
 
 if __name__ == "__main__": #keep this in
     main()
