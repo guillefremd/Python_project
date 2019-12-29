@@ -209,12 +209,12 @@ def visualise(road_map):
 
     mapa=tkinter.Tk()
     mapa.title("Road Map")
-    canvas=tkinter.Canvas(mapa,width=1600,height=800)
+    canvas=tkinter.Canvas(mapa,width=1300,height=650)
     total_distance=0
     min_lat=100
     max_lat=-100
-    min_lon=-200
-    max_lon=200
+    min_lon=200
+    max_lon=-200
 
     for i in range (0,len(road_map)):
         a= float(road_map[i][2])
@@ -226,27 +226,39 @@ def visualise(road_map):
         if b<min_lon:min_lon=b
 
 
+    dist_lat=max_lat-min_lat
+    dist_lon=max_lon-min_lon
 
+    scale_lat=600/dist_lat
+    scale_lon=1250/dist_lon
 
+    if scale_lat>scale_lon:scale=scale_lon
+    else:
+        scale=scale_lat
+        
 
     
-    
-    #for i in range (0,len(road_map)):
-    for i in range (0,50):
+    for i in range (0,len(road_map)):
+    #for i in range (0,50):
         a= float(road_map[i][2]) 
         b=float(road_map[((i+1)%len(road_map))][2])
         c=float(road_map[i][3])
         d=float(road_map[((i+1)%len(road_map))][3])
         nextdistance=math.sqrt(((a-b)**2)+((c-d)**2))
+
+        lontomap=10+((c-min_lon)*scale)
+        lattomap=10+((a-min_lat)*scale)
+        lontomapnext=10+((d-min_lon)*scale)
+        lattomapnext=10+((b-min_lat)*scale)
+
         
-        canvas.create_text((c+260)*6,(a)*6,text=str(i))
+        
+        canvas.create_text(lontomap,lattomap,text=i)
+        canvas.create_line(lontomap, lattomap, lontomapnext, lattomapnext)
+        print(scale)
         canvas.pack()
         
-    canvas.create_text(10,200,text="10,200")
-    canvas.create_text(200,10,text="200,10")
-    canvas.pack()
 
-    
 
 
 def main():
