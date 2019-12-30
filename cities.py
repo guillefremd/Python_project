@@ -1,6 +1,8 @@
 import copy
 import math
-import tkinter
+from tkinter import *
+from tkinter import font
+
 from random import randint
 
 
@@ -207,14 +209,24 @@ def print_map(road_map):
     
 def visualise(road_map):
 
-    mapa=tkinter.Tk()
+    mapa=Tk()
     mapa.title("Road Map")
-    canvas=tkinter.Canvas(mapa,width=1300,height=650)
+    canvas=Canvas(mapa,width=900,height=600)
+    canvas.config(scrollregion=canvas.bbox(mapa))
     total_distance=0
     min_lat=100
     max_lat=-100
     min_lon=200
     max_lon=-200
+
+    scrollbar = Scrollbar(mapa)
+    scrollbar.pack(side=RIGHT, fill=Y)
+
+
+    scrollbar2 = Scrollbar(mapa,orient=HORIZONTAL)
+    scrollbar2.pack(side=BOTTOM, fill=X)
+
+    
 
     for i in range (0,len(road_map)):
         a= float(road_map[i][2])
@@ -229,15 +241,14 @@ def visualise(road_map):
     dist_lat=max_lat-min_lat
     dist_lon=max_lon-min_lon
 
-    scale_lat=600/dist_lat
-    scale_lon=1250/dist_lon
+    scale_lat=2000/dist_lat
+    scale_lon=4000/dist_lon
 
     if scale_lat>scale_lon:scale=scale_lon
     else:
         scale=scale_lat
-        
+       
 
-    
     for i in range (0,len(road_map)):
     #for i in range (0,50):
         a= float(road_map[i][2]) 
@@ -246,18 +257,27 @@ def visualise(road_map):
         d=float(road_map[((i+1)%len(road_map))][3])
         nextdistance=math.sqrt(((a-b)**2)+((c-d)**2))
 
-        lontomap=10+((c-min_lon)*scale)
-        lattomap=10+((a-min_lat)*scale)
-        lontomapnext=10+((d-min_lon)*scale)
-        lattomapnext=10+((b-min_lat)*scale)
+        lontomap=50+((c-min_lon)*scale)
+        lattomap=50+((a-min_lat)*scale)
+        lontomapnext=50+((d-min_lon)*scale)
+        lattomapnext=50+((b-min_lat)*scale)
 
-        
-        
-        canvas.create_text(lontomap,lattomap,text=i)
-        canvas.create_line(lontomap, lattomap, lontomapnext, lattomapnext)
+
+        myfont = font.Font(family='freemono', size=9, weight="bold")
+        canvas.create_text(lontomap,lattomap,anchor=W, font=myfont,text=str(i)+" -" + road_map[i][1])
+        canvas.create_line(lontomap, lattomap, lontomapnext, lattomapnext,dash=(4,4))
         print(scale)
-        canvas.pack()
+        canvas.pack(fill="both", expand=True)
         
+    canvas.config(yscrollcommand=scrollbar.set)
+    canvas.config(xscrollcommand=scrollbar2.set)
+
+    scrollbar.config(command=canvas.yview)
+    scrollbar2.config(command=canvas.xview)
+
+    canvas.configure(scrollregion=canvas.bbox("all"))
+
+
 
 
 
