@@ -241,8 +241,12 @@ def visualise(road_map):
     dist_lat=max_lat-min_lat
     dist_lon=max_lon-min_lon
 
-    scale_lat=2000/dist_lat
-    scale_lon=4000/dist_lon
+
+    width_map=4000
+    height_map=2000
+
+    scale_lat=height_map/dist_lat
+    scale_lon=width_map/dist_lon
 
     if scale_lat>scale_lon:scale=scale_lon
     else:
@@ -258,14 +262,16 @@ def visualise(road_map):
         nextdistance=math.sqrt(((a-b)**2)+((c-d)**2))
 
         lontomap=50+((c-min_lon)*scale)
-        lattomap=50+((a-min_lat)*scale)
+        lattomap=height_map-(50+((a-min_lat)*scale))
         lontomapnext=50+((d-min_lon)*scale)
-        lattomapnext=50+((b-min_lat)*scale)
+        lattomapnext=height_map-(50+((b-min_lat)*scale))
 
 
-        myfont = font.Font(family='freemono', size=9, weight="bold")
-        canvas.create_text(lontomap,lattomap,anchor=W, font=myfont,text=str(i)+" -" + road_map[i][1])
-        canvas.create_line(lontomap, lattomap, lontomapnext, lattomapnext,dash=(4,4))
+        myfont = font.Font(family='freemono', size=8, weight="bold")
+        canvas.create_oval(lontomap-5, lattomap-5,lontomap+5, lattomap+5,fill="white")
+        canvas.create_text(lontomap,lattomap,anchor=W, font=myfont,text=str(i)+"\n" + road_map[i][1])
+        canvas.create_line(lontomap, lattomap, lontomapnext,lattomapnext,fill="red", dash=(4,4))
+        
         print(scale)
         canvas.pack(fill="both", expand=True)
         
