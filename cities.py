@@ -251,6 +251,10 @@ def visualise(road_map):
     if scale_lat>scale_lon:scale=scale_lon
     else:
         scale=scale_lat
+
+    for i in range(int(min_lat-2),int(max_lat+2)):
+        canvas.create_line(min_lon*scale-20, height_map-i*scale, max_lon*scale+20,height_map-i*scale,fill="grey", dash=(1,1))
+        canvas.create_text(min_lon*scale-20,height_map-i*scale,anchor=W,text=str(i))
        
 
     for i in range (0,len(road_map)):
@@ -261,10 +265,10 @@ def visualise(road_map):
         d=float(road_map[((i+1)%len(road_map))][3])
         nextdistance=math.sqrt(((a-b)**2)+((c-d)**2))
 
-        lontomap=50+((c-min_lon)*scale)
-        lattomap=height_map-(50+((a-min_lat)*scale))
-        lontomapnext=50+((d-min_lon)*scale)
-        lattomapnext=height_map-(50+((b-min_lat)*scale))
+        lontomap=((c)*scale)
+        lattomap=height_map-(((a)*scale))
+        lontomapnext=((d)*scale)
+        lattomapnext=height_map-(((b)*scale))
 
 
         myfont = font.Font(family='freemono', size=8, weight="bold")
@@ -284,7 +288,7 @@ def visualise(road_map):
     canvas.configure(scrollregion=canvas.bbox("all"))
 
 
-
+    mapa.mainloop()
 
 
 def main():
