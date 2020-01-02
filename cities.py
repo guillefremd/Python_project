@@ -149,7 +149,7 @@ def shift_cities(road_map):
 
 def find_best_cycle(road_map):
     
-     bestmap=road_map
+     bestmap=copy.deepcopy(road_map)
      bestdist=compute_total_distance(road_map)
      
      for i in range (0, 1000):
@@ -252,10 +252,13 @@ def visualise(road_map):
     else:
         scale=scale_lat
 
-    for i in range(int(min_lat-2),int(max_lat+2)):
-        canvas.create_line(min_lon*scale-20, height_map-i*scale, max_lon*scale+20,height_map-i*scale,fill="grey", dash=(1,1))
-        canvas.create_text(min_lon*scale-20,height_map-i*scale,anchor=W,text=str(i))
-       
+    for i in range(int(min_lat-1),int(max_lat+1)):
+        canvas.create_line((min_lon-1)*scale, height_map-i*scale, (max_lon+1)*scale,height_map-i*scale,fill="grey", dash=(1,1))
+        canvas.create_text((min_lon-1)*scale,height_map-i*scale,anchor=W,text=str(i))
+    for i in range(int(min_lon-1),int(max_lon+1)):
+        canvas.create_line(i*scale, height_map-(min_lat-1)*scale,i*scale, height_map-(max_lat+1)*scale,fill="grey", dash=(1,1))
+        canvas.create_text(i*scale, height_map-(max_lat+1)*scale,anchor=N,text=str(i))
+
 
     for i in range (0,len(road_map)):
     #for i in range (0,50):
@@ -306,3 +309,21 @@ def main():
 
 if __name__ == "__main__": #keep this in
     main()
+
+def testa():    
+
+    find_best_cycle(road_map)
+    print(compute_total_distance(road_map))
+
+    find_best_cycle(road_map)
+    print(compute_total_distance(road_map))
+
+    find_best_cycle(road_map)
+    print(compute_total_distance(road_map))
+    
+    find_best_cycle(road_map)
+    print(compute_total_distance(road_map))
+
+    find_best_cycle(road_map)
+    print(compute_total_distance(road_map))
+    
