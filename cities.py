@@ -251,9 +251,9 @@ def visualise(road_map):
         lontomapnext=((d)*scale)
         lattomapnext=height_map-(((b)*scale))
 
-        canvas.create_oval(lontomap-5, lattomap-5,lontomap+5, lattomap+5,fill="white")
-        canvas.create_text(lontomap,lattomap,anchor=W, font=myfont,text=str(i)+"\n" + road_map[i][1])
-        canvas.create_line(lontomap, lattomap, lontomapnext,lattomapnext,fill="red", dash=(4,4))
+        canvas.create_oval(lontomap-3, lattomap-3,lontomap+3, lattomap+3,fill="salmon")
+        canvas.create_text(lontomap,lattomap,anchor=W, font=myfont,text=str(i+1)+"\n" + road_map[i][1])
+        canvas.create_line(lontomap, lattomap, lontomapnext,lattomapnext,fill="steel blue")
         
         canvas.pack(fill="both", expand=True)
         
