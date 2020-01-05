@@ -45,7 +45,7 @@ def print_cities(road_map):
             return False
         else:
             for i in road_map:
-                print(i[1], round(float(i[2]),1), round(float(i[3]),1))
+                print(i[1], round((i[2]),1), round((i[3]),1))
     except:
         print(str(road_map) + " is not a valid road map. Please try again")
         return False
@@ -58,10 +58,10 @@ def compute_total_distance(road_map):
         else:
             total_distance=0
             for i in range (0,len(road_map)):
-                a= float(road_map[i][2])
-                b=float(road_map[((i+1)%len(road_map))][2])
-                c=float(road_map[i][3])
-                d=float(road_map[((i+1)%len(road_map))][3])
+                a= road_map[i][2]
+                b=road_map[((i+1)%len(road_map))][2]
+                c=road_map[i][3]
+                d=road_map[((i+1)%len(road_map))][3]
                 nextdistance=math.sqrt(((a-b)**2)+((c-d)**2))
                 total_distance+=nextdistance
             return total_distance
@@ -144,13 +144,13 @@ def print_map(road_map):
         else:
             total_distance=0
             for i in range (0,len(road_map)):
-                a= float(road_map[i][2]) 
-                b=float(road_map[((i+1)%len(road_map))][2])
-                c=float(road_map[i][3])
-                d=float(road_map[((i+1)%len(road_map))][3])
+                a= road_map[i][2] 
+                b=road_map[((i+1)%len(road_map))][2]
+                c=road_map[i][3]
+                d=road_map[((i+1)%len(road_map))][3]
                 nextdistance=math.sqrt(((a-b)**2)+((c-d)**2))
 
-                print ("From " + road_map[i][1] + " to " + (road_map[((i+1)%len(road_map))][1]) +": "+ str(nextdistance))
+                print ("Distance from " + road_map[i][1] + " to " + (road_map[((i+1)%len(road_map))][1]) +": "+ str(nextdistance))
                 total_distance+=nextdistance
             print("----------End of the road map----------")
             print("The total distance of the current road map is " + str(total_distance))
@@ -174,10 +174,10 @@ def visualise(road_map):
         for i2 in range(0,len(road_map)):
             if i!=i2:
                 
-                a= float(road_map[i][2])
-                b=float(road_map[i2][2])
-                c=float(road_map[i][3])
-                d=float(road_map[i2][3])
+                a= road_map[i][2]
+                b=road_map[i2][2]
+                c=road_map[i][3]
+                d=road_map[i2][3]
                 this_distance=math.sqrt(((a-b)**2)+((c-d)**2))
                 if this_distance<min_distance:min_distance=this_distance
                 
@@ -197,8 +197,8 @@ def visualise(road_map):
     max_lon=-180    
 
     for i in range (0,len(road_map)):
-        a= float(road_map[i][2])
-        b=float(road_map[i][3])
+        a=road_map[i][2]
+        b=road_map[i][3]
 
         if a<min_lat:min_lat=a
         if a>max_lat:max_lat=a
@@ -230,10 +230,10 @@ def visualise(road_map):
     myfont = font.Font(family='freemono', size=8)
 
     for i in range (0,len(road_map)):
-        a= float(road_map[i][2]) 
-        b=float(road_map[((i+1)%len(road_map))][2])
-        c=float(road_map[i][3])
-        d=float(road_map[((i+1)%len(road_map))][3])
+        a= road_map[i][2] 
+        b=road_map[((i+1)%len(road_map))][2]
+        c=road_map[i][3]
+        d=road_map[((i+1)%len(road_map))][3]
         nextdistance=math.sqrt(((a-b)**2)+((c-d)**2))
 
         lontomap=((c)*scale)
@@ -241,8 +241,6 @@ def visualise(road_map):
         lontomapnext=((d)*scale)
         lattomapnext=height_map-(((b)*scale))
 
-
-       
         canvas.create_oval(lontomap-5, lattomap-5,lontomap+5, lattomap+5,fill="white")
         canvas.create_text(lontomap,lattomap,anchor=W, font=myfont,text=str(i)+"\n" + road_map[i][1])
         canvas.create_line(lontomap, lattomap, lontomapnext,lattomapnext,fill="red", dash=(4,4))
