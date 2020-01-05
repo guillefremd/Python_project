@@ -11,7 +11,6 @@ def read_cities(file_name):
         infile = open(file_name, "r")
         global road_map
         road_map=[]
-        cities_data=[]
         line=infile.readline()
      
         while line !="":
@@ -25,7 +24,18 @@ def read_cities(file_name):
             road_map[i][2]=float(road_map[i][2])
             road_map[i][3]=float(road_map[i][3])
 
-        
+        for i in range (0,len(road_map)):
+            for i2 in range(0,len(road_map)):
+                if i!=i2:
+                
+                    a= road_map[i][2]
+                    b=road_map[i2][2]
+                    c=road_map[i][3]
+                    d=road_map[i2][3]
+                    if a==b and c==d:
+                        print("There is a problem with your file: two cities cannot have the exact same latitude and longitude. \nPlease try again with a new file")
+                        return False
+            
         return (road_map)
 
     except FileNotFoundError:
@@ -66,7 +76,7 @@ def compute_total_distance(road_map):
                 total_distance+=nextdistance
             return total_distance
     except ValueError:
-        print("Please make sure your cities data file is correct.\n Please usa a new map")
+        print("Please make sure your cities data file is correct.\nPlease usa a new map")
         return False
 
 def swap_cities(road_map, index1, index2):
@@ -116,7 +126,7 @@ def find_best_cycle(road_map):
     bestmap=copy.deepcopy(road_map)
     bestdist=compute_total_distance(road_map)
      
-    for i in range (0, 1000):
+    for i in range (0, 10000):
         ran1=randint(0,(len(road_map)-1))
         ran2=randint(0,(len(road_map)-1))
         while ran1==ran2:
@@ -254,7 +264,6 @@ def visualise(road_map):
     scrollbar2.config(command=canvas.xview)
 
     canvas.configure(scrollregion=canvas.bbox("all"))
-
 
     mapa.mainloop()
 
