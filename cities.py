@@ -139,9 +139,9 @@ def find_best_cycle(road_map):
             bestdist=compute_total_distance(road_map)
             bestmap=copy.deepcopy(road_map)
                     
-
-    for i in range (0,len(road_map)):
-        road_map[i]=bestmap[i]
+        else:
+            for i in range (0,len(road_map)):
+                road_map[i]=bestmap[i]
 
     return road_map
     
