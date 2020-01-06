@@ -75,6 +75,9 @@ def compute_total_distance(road_map):
                 nextdistance=math.sqrt(((a-b)**2)+((c-d)**2))
                 total_distance+=nextdistance
             return total_distance
+    except TypeError:
+        print("Please make sure your cities data file is correct.\nPlease usa a new map")
+        return False
     except ValueError:
         print("Please make sure your cities data file is correct.\nPlease usa a new map")
         return False
