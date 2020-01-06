@@ -221,20 +221,29 @@ def visualise(road_map):
     width_map=(dist_lon/min_distance)
     height_map=(dist_lat/min_distance)
 
-    if height_map<50:with_map=50
-    if width_map<100:width_map=100
+    if height_map<80:height_map=80
+    if width_map<160:width_map=160
 
-    scale=30/min_distance
-    if scale<30:scale=30
+    scale=20/min_distance
+    if scale<25:scale=20
 
+
+    if (int(max_lon)-int(min_lon))%2==0:pair=1
+    else:pair=0
+
+    if (int(max_lat)-int(min_lat))%2==0:pair2=1
+    else:pair2=0
 
     myfontbold = font.Font(family='freemono', size=9, weight="bold")
 
-    for i in range(int(max_lat)+2, int(min_lat)-2,-1):
-        canvas.create_line((int(min_lon)-2)*scale, height_map-i*scale, int((max_lon)+1)*scale,height_map-i*scale,fill="grey", dash=(1,1))
-        canvas.create_text((int(min_lon)-2)*scale, height_map-i*scale,anchor=NE,font=myfontbold,text=str(i))
-    for i in range(int(max_lon)+1,int(min_lon)-3,-1):
-        canvas.create_line(i*scale, height_map-int((min_lat)-1)*scale,i*scale, height_map-int((max_lat)+2)*scale,fill="grey", dash=(1,1))
+
+    for i in range(int(max_lat)+2, int(min_lat)-2-pair2,-2):
+        canvas.create_line((int(min_lon)-2-pair)*scale, height_map-i*scale, int((max_lon)+1)*scale,height_map-i*scale,fill="grey", dash=(1,1))
+        canvas.create_text((int(min_lon)-2-pair)*scale, height_map-i*scale,anchor=NE,font=myfontbold,text=str(i))
+
+
+    for i in range(int(max_lon)+1,(int(min_lon)-3)-pair,-2):
+        canvas.create_line(i*scale, height_map-int((min_lat)-1-pair2)*scale,i*scale, height_map-int((max_lat)+2)*scale,fill="grey", dash=(1,1))
         canvas.create_text(i*scale, height_map-int((max_lat)+2)*scale,anchor=S,font=myfontbold,text=str(i))
 
     myfont = font.Font(family='freemono', size=8)
@@ -251,9 +260,10 @@ def visualise(road_map):
         lontomapnext=((d)*scale)
         lattomapnext=height_map-(((b)*scale))
 
+        canvas.create_line(lontomap, lattomap, lontomapnext,lattomapnext,fill="steel blue")
         canvas.create_oval(lontomap-3, lattomap-3,lontomap+3, lattomap+3,fill="salmon")
         canvas.create_text(lontomap,lattomap,anchor=W, font=myfont,text=str(i+1)+"\n" + road_map[i][1])
-        canvas.create_line(lontomap, lattomap, lontomapnext,lattomapnext,fill="steel blue")
+        
         
         canvas.pack(fill="both", expand=True)
         
@@ -264,6 +274,7 @@ def visualise(road_map):
     scrollbar2.config(command=canvas.xview)
 
     canvas.configure(scrollregion=canvas.bbox("all"))
+    mapa.state('zoomed')
 
     mapa.mainloop()
 
